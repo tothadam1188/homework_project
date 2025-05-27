@@ -3,6 +3,12 @@ package hu.unideb.inf.model;
 import game.State;
 
 public class GameModel implements State{
+
+    private Player currentPlayer;
+    private Status status;
+    private int boardSize=11;
+    private int[][] board;
+
     /**
      * @return
      */
