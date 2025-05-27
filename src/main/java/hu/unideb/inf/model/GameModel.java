@@ -19,6 +19,16 @@ public class GameModel implements State<Move>{
         this.currentPlayer = Player.PLAYER_1;
         this.status = Status.IN_PROGRESS;
         this.board = new int[boardSize][boardSize];
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (i%2==0 && j%2==1){
+                    board[i][j]=1;
+                }
+                if(i%2==1 && j%2==0){
+                    board[i][j]=2;
+                }
+            }
+        }
     }
 
     /**
