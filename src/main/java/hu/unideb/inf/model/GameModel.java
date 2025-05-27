@@ -75,7 +75,8 @@ public class GameModel implements State<Move>{
                 }
             }
             if (isContinuous) {
-                status = Status.PLAYER_2_WINS;
+                if(status==Status.PLAYER_1_WINS) status=Status.DRAW;
+                else status = Status.PLAYER_2_WINS;
                 return true;
             }
         }
