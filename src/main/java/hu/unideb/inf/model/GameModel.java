@@ -118,12 +118,14 @@ public class GameModel implements State<Move>{
      * @param move the {@link Move} to execute
      */
     public void makeMove(Move move) {
-        if (!isLegalMove(move)){
-            //TODO: create GameModelException class and use here
+        if (!isLegalMove(move)) {
+            throw new GameModelException("Illegal move at row " + move.row() + ", column " + move.col());
         }
         if(currentPlayer==Player.PLAYER_1) board[move.col()][move.row()]=1;
         if(currentPlayer==Player.PLAYER_2) board[move.col()][move.row()]=2;
-        // TODO: Check for win and update game status
-        currentPlayer=getNextPlayer();
+
+        if(!isGameOver()) {
+            currentPlayer = getNextPlayer();
+        }
     }
 }
