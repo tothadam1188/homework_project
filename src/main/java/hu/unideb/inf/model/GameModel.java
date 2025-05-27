@@ -128,4 +128,12 @@ public class GameModel implements State<Move>{
             currentPlayer = getNextPlayer();
         }
     }
+
+    /**
+     * Returns the current player.
+     * @return the {@link game.State.Player} representing the game's current player.
+     */
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 }
