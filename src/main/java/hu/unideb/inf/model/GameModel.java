@@ -3,12 +3,16 @@ package hu.unideb.inf.model;
 import game.State;
 import org.tinylog.Logger;
 
+/**
+ * Game logic and state manager for the board game. Handles player turns, move validation, win conditions, and game status.
+ * Implements {@link State} using {@link Move} for interactions.
+ */
 public class GameModel implements State<Move>{
 
     private Player currentPlayer;
     private Status status;
-    private int boardSize=11;
-    private int[][] board;
+    private static final int boardSize=11;
+    private final int[][] board;
 
     /**
      * Initializes the game model with default settings.
