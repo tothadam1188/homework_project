@@ -1,6 +1,7 @@
 package hu.unideb.inf.model;
 
 import game.State;
+import org.tinylog.Logger;
 
 public class GameModel implements State<Move>{
 
@@ -29,6 +30,7 @@ public class GameModel implements State<Move>{
                 }
             }
         }
+        Logger.info("GameModel initialized with player={}, status={}", currentPlayer, status);
     }
 
     /**
@@ -37,8 +39,14 @@ public class GameModel implements State<Move>{
      */
     @Override
     public Player getNextPlayer() {
-        if(currentPlayer==Player.PLAYER_1) return Player.PLAYER_2;
-        return Player.PLAYER_1;
+        if(currentPlayer==Player.PLAYER_1) {
+            Logger.debug("Next player: {}", Player.PLAYER_2);
+            return Player.PLAYER_2;
+        }
+        else {
+            Logger.debug("Next player: {}", Player.PLAYER_1);
+            return Player.PLAYER_1;
+        }
     }
 
     /**
@@ -53,6 +61,7 @@ public class GameModel implements State<Move>{
      */
     @Override
     public boolean isGameOver() {
+        Logger.debug("Checking if the game is over.");
         for (int col = 0; col < boardSize; col++) {
             boolean isContinuous = true;
             for (int row = 0; row < boardSize; row++) {
@@ -63,6 +72,7 @@ public class GameModel implements State<Move>{
             }
             if (isContinuous) {
                 status = Status.PLAYER_1_WINS;
+                Logger.info("Game over: PLAYER_1 wins");
                 return true;
             }
         }
@@ -75,11 +85,18 @@ public class GameModel implements State<Move>{
                 }
             }
             if (isContinuous) {
-                if(status==Status.PLAYER_1_WINS) status=Status.DRAW;
-                else status = Status.PLAYER_2_WINS;
+                if(status==Status.PLAYER_1_WINS) {
+                    Logger.info("Game over: DRAW");
+                    status = Status.DRAW;
+                }
+                else {
+                    Logger.info("Game over: PLAYER_2 wins");
+                    status = Status.PLAYER_2_WINS;
+                }
                 return true;
             }
         }
+        Logger.debug("No winning state reached, game is continuing.");
         return false;
     }
 
@@ -110,7 +127,9 @@ public class GameModel implements State<Move>{
     public boolean isLegalMove(Move move) {
         int row = move.row();
         int col = move.col();
-        return row >= 0 && row < boardSize && col >= 0 && col < boardSize;
+        boolean isMoveLegal=row >= 0 && row < boardSize && col >= 0 && col < boardSize;
+        Logger.debug("Move legality checked at ({}, {}): {}", move.row(), move.col(), isMoveLegal);
+        return isMoveLegal;
     }
 
     /**
@@ -118,11 +137,19 @@ public class GameModel implements State<Move>{
      * @param move the {@link Move} to execute
      */
     public void makeMove(Move move) {
+        Logger.debug("Attempting to make move: {}", move);
         if (!isLegalMove(move)) {
+            Logger.error("Illegal move attempted at row={}, col={}", move.row(), move.col());
             throw new GameModelException("Illegal move at row " + move.row() + ", column " + move.col());
         }
-        if(currentPlayer==Player.PLAYER_1) board[move.col()][move.row()]=1;
-        if(currentPlayer==Player.PLAYER_2) board[move.col()][move.row()]=2;
+        if(currentPlayer==Player.PLAYER_1) {
+            Logger.info("PLAYER_1 moved at ({}, {})", move.row(), move.col());
+            board[move.col()][move.row()] = 1;
+        }
+        if(currentPlayer==Player.PLAYER_2) {
+            Logger.info("PLAYER_2 moved at ({}, {})", move.row(), move.col());
+            board[move.col()][move.row()] = 2;
+        }
 
         if(!isGameOver()) {
             currentPlayer = getNextPlayer();
