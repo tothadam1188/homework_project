@@ -22,11 +22,13 @@ public class GameModel implements State{
     }
 
     /**
-     * @return
+     * Returns the next player to make a move.
+     * @return the {@link Player} who will play after the current player.
      */
     @Override
     public Player getNextPlayer() {
-        return null;
+        if(currentPlayer==Player.PLAYER_1) return Player.PLAYER_2;
+        return Player.PLAYER_1;
     }
 
     /**
@@ -38,16 +40,18 @@ public class GameModel implements State{
     }
 
     /**
-     * @return
+     * Returns the current status of the game.
+     * @return the {@link Status} representing the game's current state.
      */
     @Override
     public Status getStatus() {
-        return null;
+        return status;
     }
 
     /**
-     * @param player
-     * @return
+     * Checks if the specified player has won the game.
+     * @param player the {@link Player} to check for a winning condition
+     * @return {@code true} if the given {@code player} has won, {@code false} otherwise
      */
     @Override
     public boolean isWinner(Player player) {
