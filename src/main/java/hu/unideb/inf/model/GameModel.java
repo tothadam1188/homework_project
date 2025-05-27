@@ -10,6 +10,18 @@ public class GameModel implements State{
     private int[][] board;
 
     /**
+     * Initializes the game model with default settings.
+     * This constructor sets the current player to {@link Player#PLAYER_1},
+     * sets the game status to {@link Status#IN_PROGRESS}, and initializes
+     * an empty game board of size 11x11.
+     */
+    public GameModel() {
+        this.currentPlayer = Player.PLAYER_1;
+        this.status = Status.IN_PROGRESS;
+        this.board = new int[boardSize][boardSize];
+    }
+
+    /**
      * @return
      */
     @Override
