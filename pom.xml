@@ -3,14 +3,15 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>hu.unideb.inf</groupId>
-    <artifactId>homework-template-project<!-- TODO: replace "homework-template-project" with a suitable artifactId --></artifactId>
+    <artifactId>homework-project-2025-tothadam1188</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <description><!-- TODO: a brief description of your project --></description>
+    <description>A játékot egy 11x11-es játéktáblán kell játszani. A tábla páros sorszámú oszlopainak páratlan cellái kék színűek, páros sorszámú sorainak páratlan cellái piros színűek. Az egyik játékos célja, hogy a tábla alsó és felső széle között egy folytonos, kék mezőkből álló függőleges vonalat hozzon létre. A másik játékos feladata pedig az, hogy a tábla bal és jobb szélét kösse össze egy vízszintes, piros mezőkből álló vonallal. A játékosok felváltva színezhetnek be egy-egy fehér mezőt a saját színükre. Az nyer, aki elsőként összeköti a tábla két szélét a saját színének megfelelő vonallal.
+    </description>
     <developers>
         <developer>
-            <name><!-- TODO: your full name --></name>
-            <email><!-- TODO: your email address --></email>
+            <name>Tóth Ádám</name>
+            <email>toth.adam@mailbox.unideb.hu</email>
             <organization>Faculty of Informatics, University of Debrecen</organization>
             <organizationUrl>https://inf.unideb.hu/</organizationUrl>
         </developer>
@@ -24,7 +25,7 @@
         <jacoco.version>0.8.13</jacoco.version>
         <maven.checkstyle.version>3.6.0</maven.checkstyle.version>
         <maven.surefire.version>3.5.3</maven.surefire.version>
-        <exec.mainClass><!-- TODO: the fully-qualified class name of your class that contains the main() method to launch the application --></exec.mainClass>
+        <exec.mainClass>hu.unideb.inf.Main</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
