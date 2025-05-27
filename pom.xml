@@ -56,6 +56,16 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-api</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-impl</artifactId>
+            <version>2.7.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -115,16 +125,6 @@
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
                         <version>10.23.1</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.tinylog</groupId>
-                        <artifactId>tinylog-api</artifactId>
-                        <version>2.7.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.tinylog</groupId>
-                        <artifactId>tinylog-impl</artifactId>
-                        <version>2.7.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
