@@ -42,10 +42,43 @@ public class GameModel implements State<Move>{
     }
 
     /**
-     * @return
+     * Checks whether the game is over by evaluating win conditions for both players.
+     * The game ends if:
+     * <ul>
+     *     <li>{@link Player#PLAYER_1} (value {@code 1}) has a complete vertical column of their markers.</li>
+     *     <li>{@link Player#PLAYER_2} (value {@code 2}) has a complete horizontal row of their markers.</li>
+     * </ul>
+     * If either condition is met, the {@link #status} is updated accordingly and {@code true} is returned.
+     * @return {@code true} if a player has won, otherwise {@code false}
      */
     @Override
     public boolean isGameOver() {
+        for (int col = 0; col < boardSize; col++) {
+            boolean isContinuous = true;
+            for (int row = 0; row < boardSize; row++) {
+                if (board[row][col] != 2) {
+                    isContinuous = false;
+                    break;
+                }
+            }
+            if (isContinuous) {
+                status = Status.PLAYER_1_WINS;
+                return true;
+            }
+        }
+        for (int row = 0; row < boardSize; row++) {
+            boolean isContinuous = true;
+            for (int col = 0; col < boardSize; col++) {
+                if (board[row][col] != 2) {
+                    isContinuous = false;
+                    break;
+                }
+            }
+            if (isContinuous) {
+                status = Status.PLAYER_2_WINS;
+                return true;
+            }
+        }
         return false;
     }
 
