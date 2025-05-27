@@ -2,7 +2,7 @@ package hu.unideb.inf.model;
 
 import game.State;
 
-public class GameModel implements State{
+public class GameModel implements State<Move>{
 
     private Player currentPlayer;
     private Status status;
@@ -59,19 +59,20 @@ public class GameModel implements State{
     }
 
     /**
-     * @param o
-     * @return
+     * Checks whether the specified move is within the bounds of the game board.
+     * @param move the {@link Move} to validate
+     * @return {@code true} if the {@code move} is inside the board boundaries, {@code false} otherwise
      */
-    @Override
-    public boolean isLegalMove(Object o) {
-        return false;
+    public boolean isLegalMove(Move move) {
+        int row = move.row();
+        int col = move.col();
+        return row >= 0 && row < boardSize && col >= 0 && col < boardSize;
     }
 
     /**
-     * @param o
+     * @param move
      */
-    @Override
-    public void makeMove(Object o) {
+    public void makeMove(Move move) {
 
     }
 }
