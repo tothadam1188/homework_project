@@ -80,9 +80,16 @@ public class GameModel implements State<Move>{
     }
 
     /**
-     * @param move
+     * Makes a move on the board for the current player and switches turns.
+     * @param move the {@link Move} to execute
      */
     public void makeMove(Move move) {
-
+        if (!isLegalMove(move)){
+            //TODO: create GameModelException class and use here
+        }
+        if(currentPlayer==Player.PLAYER_1) board[move.col()][move.row()]=1;
+        if(currentPlayer==Player.PLAYER_2) board[move.col()][move.row()]=2;
+        // TODO: Check for win and update game status
+        currentPlayer=getNextPlayer();
     }
 }
