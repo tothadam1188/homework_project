@@ -1,5 +1,6 @@
 package hu.unideb.inf.controller;
 
+import hu.unideb.inf.model.GameModel;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -13,9 +14,11 @@ public class GameController {
 
     private StackPane[][] squares;
 
+    private final GameModel gameModel = new GameModel();
+
     @FXML
     private void initialize() {
-        int size = 11;
+        int size = GameModel.boardSize;
         squares = new StackPane[size][size];
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -29,7 +32,7 @@ public class GameController {
     private StackPane createSquare(int row, int col) {
         Rectangle background = new Rectangle(70, 70);
         background.setStroke(Color.BLACK);
-        background.setFill(Color.WHITE);
+        background.setFill(getColorForCell(row, col));
 
         StackPane square = new StackPane(background);
         background.widthProperty().bind(square.widthProperty());
@@ -40,5 +43,13 @@ public class GameController {
         });
 
         return square;
+    }
+
+    private Color getColorForCell(int row, int col) {
+        return switch (gameModel.getBoardCell(row, col)) {
+            case 1 -> Color.BLUE;
+            case 2 -> Color.RED;
+            default -> Color.WHITE;
+        };
     }
 }
