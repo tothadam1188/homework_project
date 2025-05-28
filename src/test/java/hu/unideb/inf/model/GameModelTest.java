@@ -16,13 +16,15 @@ public class GameModelTest {
 
     @Test
     void constructorInitializesFieldsProperly(){
-        assertEquals(State.Player.PLAYER_1, gameModel.getCurrentPlayer());
+        assertEquals(State.Player.PLAYER_1, gameModel.getNextPlayer());
         assertEquals(State.Status.IN_PROGRESS, gameModel.getStatus());
     }
 
     @Test
-    void getNextPlayerSwitchesPlayer(){
-        assertEquals(State.Player.PLAYER_2, gameModel.getNextPlayer());
+    void toStringMethodCorrectlyDisplaysGameBoard(){
+        assertEquals("0 1 0 1 0 1 0 1 0 1 0 \n2 0 2 0 2 0 2 0 2 0 2 \n0 1 0 1 0 1 0 1 0 1 0 \n2 0 2 0 2 0 2 0 2 0 2 \n0 1 0 1 0 1 0 1 0 1 0 \n" +
+                            "2 0 2 0 2 0 2 0 2 0 2 \n0 1 0 1 0 1 0 1 0 1 0 \n2 0 2 0 2 0 2 0 2 0 2 \n0 1 0 1 0 1 0 1 0 1 0 \n2 0 2 0 2 0 2 0 2 0 2 \n0 1 0 1 0 1 0 1 0 1 0 \n"
+                            ,gameModel.toString());
     }
 
     @Test
