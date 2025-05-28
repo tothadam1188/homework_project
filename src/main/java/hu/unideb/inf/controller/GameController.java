@@ -57,7 +57,17 @@ public class GameController {
     private void handleSquareClick(int row, int col) {
         gameModel.makeMove(new Move(row, col));
         updateBoardUI();
-        updateCurrentPlayerText();
+
+        if (gameModel.isGameOver()) {
+            String winner = switch (gameModel.getStatus()) {
+                case PLAYER_1_WINS -> player1Name;
+                case PLAYER_2_WINS -> player2Name;
+                default -> "Unknown";
+            };
+            currentPlayer.setText("Game Over! " + winner + " wins!");
+        } else {
+            updateCurrentPlayerText();
+        }
     }
 
     private Color getColorForCell(int row, int col) {
