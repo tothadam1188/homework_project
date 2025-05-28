@@ -137,11 +137,11 @@ public class GameModel implements State<Move>{
         }
         if(player==Player.PLAYER_1) {
             Logger.info("PLAYER_1 moved at ({}, {})", move.row(), move.col());
-            board[move.col()][move.row()] = 1;
+            board[move.row()][move.col()] = 1;
         }
         if(player==Player.PLAYER_2) {
             Logger.info("PLAYER_2 moved at ({}, {})", move.row(), move.col());
-            board[move.col()][move.row()] = 2;
+            board[move.row()][move.col()] = 2;
         }
 
         if (!isGameOver()) {
