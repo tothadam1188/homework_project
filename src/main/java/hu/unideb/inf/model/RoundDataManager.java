@@ -39,11 +39,48 @@ public class RoundDataManager {
     }
 
     /**
+     * Saves a single round by appending it to the existing list of rounds.
+     * @param round the round to be saved
+     * @param filename name of file to which data is saved
+     * @throws IOException if writing to the file fails
+     */
+    public void saveRound(Round round, String filename) throws IOException {
+        Logger.debug("Saving new round: {}", round);
+        List<Round> rounds = loadRounds(filename);
+        rounds.add(round);
+        try (FileWriter writer = new FileWriter(filename)) {
+            Logger.info("Round saved successfully. Total rounds: {}", rounds.size());
+            gson.toJson(rounds, writer);
+        } catch (IOException e) {
+            Logger.error(e, "Failed to write round data to file");
+            throw e;
+        }
+    }
+
+    /**
      * Loads all saved rounds from the JSON file.
      * @return a list of rounds; returns an empty list if file doesn't exist or is unreadable
      */
     public List<Round> loadRounds(){
         try (FileReader reader=new FileReader(FILENAME)){
+            Type roundListType = new TypeToken<List<Round>>(){}.getType();
+            List<Round> rounds = gson.fromJson(reader, roundListType);
+            Logger.debug("Loaded rounds from file");
+            if(rounds!=null) return rounds;
+            else return new ArrayList<>();
+        } catch (IOException e) {
+            Logger.warn(e, "Could not read round data file, returning empty list");
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Loads all saved rounds from the JSON file.
+     * @param filename name of file from which data is loaded
+     * @return a list of rounds; returns an empty list if file doesn't exist or is unreadable
+     */
+    public List<Round> loadRounds(String filename){
+        try (FileReader reader=new FileReader(filename)){
             Type roundListType = new TypeToken<List<Round>>(){}.getType();
             List<Round> rounds = gson.fromJson(reader, roundListType);
             Logger.debug("Loaded rounds from file");
