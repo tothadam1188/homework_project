@@ -23,7 +23,7 @@ public class ConsoleGame {
     public static Move parseMove(String s){
         s=s.trim();
         if (!s.matches("\\d+\\s+\\d+")) {
-            throw new IllegalArgumentException();
+            throw new ConsoleGameException("Invalid input format. Expected: '<row> <col>'");
         }
         var scanner = new Scanner(s);
         return new Move(scanner.nextInt(), scanner.nextInt());
