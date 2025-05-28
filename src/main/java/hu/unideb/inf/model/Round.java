@@ -19,4 +19,24 @@ public class Round {
         this.board = board;
         this.status = status;
     }
+
+    public String getPlayer1Name() {
+        return player1Name;
+    }
+
+    public String getPlayer2Name() {
+        return player2Name;
+    }
+
+    public int getRounds() {
+        return rounds;
+    }
+
+    public String getBoard() {
+        return board;
+    }
+
+    public State.Status getStatus() {
+        return status;
+    }
 }
