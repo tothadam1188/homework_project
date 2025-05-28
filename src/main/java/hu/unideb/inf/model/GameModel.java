@@ -3,6 +3,8 @@ package hu.unideb.inf.model;
 import game.State;
 import org.tinylog.Logger;
 
+import java.util.Arrays;
+
 /**
  * Game logic and state manager for the board game. Handles player turns, move validation, win conditions, and game status.
  * Implements {@link State} using {@link Move} for interactions.
@@ -69,7 +71,7 @@ public class GameModel implements State<Move>{
         for (int col = 0; col < boardSize; col++) {
             boolean isContinuous = true;
             for (int row = 0; row < boardSize; row++) {
-                if (board[row][col] != 2) {
+                if (board[row][col] != 1) {
                     isContinuous = false;
                     break;
                 }
@@ -167,4 +169,5 @@ public class GameModel implements State<Move>{
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
 }
