@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import org.tinylog.Logger;
 
 /**
  * Controller class for the game screen.
@@ -29,6 +30,7 @@ public class GameController {
      */
     @FXML
     private void initialize() {
+        Logger.debug("Initializing game board");
         int size = GameModel.boardSize;
         squares = new StackPane[size][size];
         for (int row = 0; row < size; row++) {
@@ -49,11 +51,15 @@ public class GameController {
     public void setPlayers(String player1Name, String player2Name) {
         this.player1Name=player1Name;
         this.player2Name=player2Name;
+        gameModel.setPlayers(player1Name, player2Name);
         updateCurrentPlayerText();
     }
 
     /**
      * Creates a cell on the board with click handling.
+     * @param row row of cell on board
+     * @param col column of cell on board
+     * @return a square of the StackPane class
      */
     private StackPane createSquare(int row, int col) {
         Rectangle background = new Rectangle(70, 70);
@@ -71,8 +77,11 @@ public class GameController {
 
     /**
      * Handles user clicking a cell to make a move.
+     * @param row row of user click on board
+     * @param col column of user click on board
      */
     private void handleSquareClick(int row, int col) {
+        Logger.debug("Square clicked at ({}, {})", row, col);
         gameModel.makeMove(new Move(row, col));
         updateBoardUI();
 
@@ -82,6 +91,7 @@ public class GameController {
                 case PLAYER_2_WINS -> player2Name;
                 default -> "Unknown";
             };
+            Logger.info("Game over. Winner: {}", winner);
             currentPlayer.setText("Game Over! " + winner + " wins!");
         } else {
             updateCurrentPlayerText();
@@ -90,6 +100,9 @@ public class GameController {
 
     /**
      * Determines the color of a cell based cell value.
+     * @param row row of cell on board
+     * @param col column of cell on board
+     * @return the color of the cell
      */
     private Color getColorForCell(int row, int col) {
         return switch (gameModel.getBoardCell(row, col)) {
@@ -103,6 +116,7 @@ public class GameController {
      * Updates all board cell colors based on cell values.
      */
     private void updateBoardUI() {
+        Logger.debug("Updating board UI");
         for (int row = 0; row < GameModel.boardSize; row++) {
             for (int col = 0; col < GameModel.boardSize; col++) {
                 Rectangle rect = (Rectangle) squares[row][col].getChildren().getFirst();
