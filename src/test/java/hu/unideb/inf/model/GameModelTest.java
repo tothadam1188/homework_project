@@ -25,4 +25,44 @@ public class GameModelTest {
         assertEquals(State.Player.PLAYER_2, gameModel.getNextPlayer());
     }
 
+    @Test
+    void gameModelClassDetectsPlayer1Win(){
+        gameModel.makeMove(new Move(1,1));
+        gameModel.makeMove(new Move(3,1));
+        gameModel.makeMove(new Move(1,3));
+        gameModel.makeMove(new Move(5,1));
+        gameModel.makeMove(new Move(1,5));
+        gameModel.makeMove(new Move(7,1));
+        gameModel.makeMove(new Move(1,7));
+        gameModel.makeMove(new Move(9,1));
+        gameModel.makeMove(new Move(1,9));
+
+        assertTrue(gameModel.isGameOver());
+        assertEquals(State.Status.PLAYER_1_WINS, gameModel.getStatus());
+        assertTrue(gameModel.isWinner(State.Player.PLAYER_1));
+    }
+
+    @Test
+    void gameModelClassDetectsPlayer2Win(){
+        gameModel.makeMove(new Move(1,1));
+        gameModel.makeMove(new Move(1,1));
+        gameModel.makeMove(new Move(3,2));
+        gameModel.makeMove(new Move(3,1));
+        gameModel.makeMove(new Move(1,3));
+        gameModel.makeMove(new Move(5,1));
+        gameModel.makeMove(new Move(1,5));
+        gameModel.makeMove(new Move(7,1));
+        gameModel.makeMove(new Move(1,7));
+        gameModel.makeMove(new Move(9,1));
+
+        assertTrue(gameModel.isGameOver());
+        assertEquals(State.Status.PLAYER_2_WINS, gameModel.getStatus());
+        assertTrue(gameModel.isWinner(State.Player.PLAYER_2));
+    }
+
+    @Test
+    void gameModelClassDetectsIllegalMove(){
+        assertThrows(GameModelException.class, () -> gameModel.makeMove(new Move(1,11)));
+    }
+
 }
