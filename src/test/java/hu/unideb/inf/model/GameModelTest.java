@@ -1,6 +1,9 @@
 package hu.unideb.inf.model;
 
 import game.State;
+import hu.unideb.inf.model.core.GameModel;
+import hu.unideb.inf.model.core.Move;
+import hu.unideb.inf.model.exception.GameModelException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

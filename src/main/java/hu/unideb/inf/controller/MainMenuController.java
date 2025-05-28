@@ -1,8 +1,8 @@
 package hu.unideb.inf.controller;
 
 import game.State;
-import hu.unideb.inf.model.Round;
-import hu.unideb.inf.model.RoundDataManager;
+import hu.unideb.inf.model.persistence.Round;
+import hu.unideb.inf.model.persistence.RoundDataManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

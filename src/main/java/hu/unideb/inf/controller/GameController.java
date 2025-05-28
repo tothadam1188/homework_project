@@ -1,7 +1,7 @@
 package hu.unideb.inf.controller;
 
-import hu.unideb.inf.model.GameModel;
-import hu.unideb.inf.model.Move;
+import hu.unideb.inf.model.core.GameModel;
+import hu.unideb.inf.model.core.Move;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;

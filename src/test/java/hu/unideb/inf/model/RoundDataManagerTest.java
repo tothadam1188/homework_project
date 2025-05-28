@@ -1,6 +1,8 @@
 package hu.unideb.inf.model;
 
 import game.State;
+import hu.unideb.inf.model.persistence.Round;
+import hu.unideb.inf.model.persistence.RoundDataManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

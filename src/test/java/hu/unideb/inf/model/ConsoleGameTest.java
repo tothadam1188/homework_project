@@ -1,5 +1,7 @@
 package hu.unideb.inf.model;
 
+import hu.unideb.inf.model.console.ConsoleGame;
+import hu.unideb.inf.model.exception.ConsoleGameException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
