@@ -9,6 +9,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+/**
+ * Controller class for the game screen.
+ * Manages UI interaction and updates based on game state.
+ */
 public class GameController {
     @FXML private Text currentPlayer;
     private String player1Name;
@@ -20,6 +24,9 @@ public class GameController {
 
     private final GameModel gameModel = new GameModel();
 
+    /**
+     * Initializes the game board UI and sets up event listeners.
+     */
     @FXML
     private void initialize() {
         int size = GameModel.boardSize;
@@ -34,12 +41,20 @@ public class GameController {
         updateCurrentPlayerText();
     }
 
+    /**
+     * Sets the player names and updates UI text.
+     * @param player1Name name of player 1
+     * @param player2Name name of player 2
+     */
     public void setPlayers(String player1Name, String player2Name) {
         this.player1Name=player1Name;
         this.player2Name=player2Name;
         updateCurrentPlayerText();
     }
 
+    /**
+     * Creates a cell on the board with click handling.
+     */
     private StackPane createSquare(int row, int col) {
         Rectangle background = new Rectangle(70, 70);
         background.setStroke(Color.BLACK);
@@ -54,6 +69,9 @@ public class GameController {
         return square;
     }
 
+    /**
+     * Handles user clicking a cell to make a move.
+     */
     private void handleSquareClick(int row, int col) {
         gameModel.makeMove(new Move(row, col));
         updateBoardUI();
@@ -70,6 +88,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Determines the color of a cell based cell value.
+     */
     private Color getColorForCell(int row, int col) {
         return switch (gameModel.getBoardCell(row, col)) {
             case 1 -> Color.BLUE;
@@ -78,6 +99,9 @@ public class GameController {
         };
     }
 
+    /**
+     * Updates all board cell colors based on cell values.
+     */
     private void updateBoardUI() {
         for (int row = 0; row < GameModel.boardSize; row++) {
             for (int col = 0; col < GameModel.boardSize; col++) {
@@ -87,6 +111,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Updates the UI text to show the current player's turn.
+     */
     private void updateCurrentPlayerText() {
         currentPlayer.setText(switch (gameModel.getNextPlayer()) {
             case PLAYER_1 -> player1Name + "'s turn";
