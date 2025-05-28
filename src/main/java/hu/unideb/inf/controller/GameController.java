@@ -31,7 +31,7 @@ public class GameController {
     @FXML
     private void initialize() {
         Logger.debug("Initializing game board");
-        int size = GameModel.boardSize;
+        int size = GameModel.BOARD_SIZE;
         squares = new StackPane[size][size];
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -81,6 +81,10 @@ public class GameController {
      * @param col column of user click on board
      */
     private void handleSquareClick(int row, int col) {
+        if (gameModel.isGameOver()) {
+            Logger.debug("Click ignored, game is already over.");
+            return;
+        }
         Logger.debug("Square clicked at ({}, {})", row, col);
         gameModel.makeMove(new Move(row, col));
         updateBoardUI();
@@ -117,8 +121,8 @@ public class GameController {
      */
     private void updateBoardUI() {
         Logger.debug("Updating board UI");
-        for (int row = 0; row < GameModel.boardSize; row++) {
-            for (int col = 0; col < GameModel.boardSize; col++) {
+        for (int row = 0; row < GameModel.BOARD_SIZE; row++) {
+            for (int col = 0; col < GameModel.BOARD_SIZE; col++) {
                 Rectangle rect = (Rectangle) squares[row][col].getChildren().getFirst();
                 rect.setFill(getColorForCell(row, col));
             }
