@@ -16,7 +16,7 @@ public class GameModel implements State<Move>{
 
     private Player player;
     private Status status;
-    public static final int boardSize=11;
+    public static final int BOARD_SIZE =11;
     private final int[][] board;
     private String player1Name;
     private String player2Name;
@@ -36,9 +36,9 @@ public class GameModel implements State<Move>{
     public GameModel() {
         this.player = Player.PLAYER_1;
         this.status = Status.IN_PROGRESS;
-        this.board = new int[boardSize][boardSize];
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+        this.board = new int[BOARD_SIZE][BOARD_SIZE];
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
                 if (i%2==0 && j%2==1){
                     board[i][j]=1;
                 }
@@ -72,9 +72,9 @@ public class GameModel implements State<Move>{
     @Override
     public boolean isGameOver() {
         Logger.debug("Checking if the game is over.");
-        for (int col = 0; col < boardSize; col++) {
+        for (int col = 0; col < BOARD_SIZE; col++) {
             boolean isContinuous = true;
-            for (int row = 0; row < boardSize; row++) {
+            for (int row = 0; row < BOARD_SIZE; row++) {
                 if (board[row][col] != 1) {
                     isContinuous = false;
                     break;
@@ -86,9 +86,9 @@ public class GameModel implements State<Move>{
                 return true;
             }
         }
-        for (int row = 0; row < boardSize; row++) {
+        for (int row = 0; row < BOARD_SIZE; row++) {
             boolean isContinuous = true;
-            for (int col = 0; col < boardSize; col++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
                 if (board[row][col] != 2) {
                     isContinuous = false;
                     break;
@@ -131,7 +131,7 @@ public class GameModel implements State<Move>{
     public boolean isLegalMove(Move move) {
         int row = move.row();
         int col = move.col();
-        boolean isMoveLegal=row >= 0 && row < boardSize && col >= 0 && col < boardSize;
+        boolean isMoveLegal=row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE;
         Logger.debug("Move legality checked at ({}, {}): {}", move.row(), move.col(), isMoveLegal);
         return isMoveLegal;
     }
@@ -173,8 +173,8 @@ public class GameModel implements State<Move>{
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
                 sb.append(board[i][j]).append(" ");
             }
             sb.append("\n");
