@@ -1,4 +1,4 @@
-package hu.unideb.inf.model;
+package hu.unideb.inf.model.persistence;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

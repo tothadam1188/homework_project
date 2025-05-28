@@ -1,5 +1,8 @@
-package hu.unideb.inf.model;
+package hu.unideb.inf.model.console;
 import game.console.Game;
+import hu.unideb.inf.model.core.GameModel;
+import hu.unideb.inf.model.core.Move;
+import hu.unideb.inf.model.exception.ConsoleGameException;
 import org.tinylog.Logger;
 
 import java.util.Scanner;

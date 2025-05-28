@@ -1,6 +1,9 @@
-package hu.unideb.inf.model;
+package hu.unideb.inf.model.core;
 
 import game.State;
+import hu.unideb.inf.model.exception.GameModelException;
+import hu.unideb.inf.model.persistence.Round;
+import hu.unideb.inf.model.persistence.RoundDataManager;
 import org.tinylog.Logger;
 
 import java.io.IOException;
@@ -135,6 +138,7 @@ public class GameModel implements State<Move>{
 
     /**
      * Makes a move on the board for the current player and switches turns.
+     * When the game is over, saves round data using {@link RoundDataManager}.
      * @param move the {@link Move} to execute
      */
     public void makeMove(Move move) {

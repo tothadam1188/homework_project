@@ -1,4 +1,4 @@
-package hu.unideb.inf.model;
+package hu.unideb.inf.model.core;
 
 /**
  * Represents a move on the game board.
