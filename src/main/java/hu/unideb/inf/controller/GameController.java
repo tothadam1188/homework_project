@@ -91,7 +91,6 @@ public class GameController {
         currentPlayer.setText(switch (gameModel.getNextPlayer()) {
             case PLAYER_1 -> player1Name + "'s turn";
             case PLAYER_2 -> player2Name + "'s turn";
-            default -> "Unknown player";
         });
     }
 }
