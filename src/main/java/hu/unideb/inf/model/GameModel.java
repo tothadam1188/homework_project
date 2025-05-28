@@ -13,7 +13,7 @@ public class GameModel implements State<Move>{
 
     private Player player;
     private Status status;
-    private static final int boardSize=11;
+    public static final int boardSize=11;
     private final int[][] board;
 
     /**
@@ -159,6 +159,20 @@ public class GameModel implements State<Move>{
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    /**
+     * Returns the value of the cell at the specified row and column on the game board.
+     * @param row the row index of the cell
+     * @param col the column index of the cell
+     * @return the value at the specified cell (0 for empty, 1 for Player 1, 2 for Player 2)
+     * @throws GameModelException if the row or column is out of bounds
+     */
+    public int getBoardCell(int row, int col) throws GameModelException {
+        if (row < 0 || row >= board.length || col < 0 || col >= board[row].length) {
+            throw new GameModelException("Row or column index out of bounds: row=" + row + ", col=" + col);
+        }
+        return board[row][col];
     }
 
 }
