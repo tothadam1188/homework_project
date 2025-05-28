@@ -11,10 +11,19 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller class for the main menu of the application.
+ * Handles input of player names and navigation to the game screen.
+ */
 public class MainMenuController {
     @FXML private TextField player1Name;
     @FXML private TextField player2Name;
 
+    /**
+     * Handles the click event on the "Start" button.
+     * @param event the mouse event triggered by clicking the Start button
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     void onStartClick(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/game_view.fxml"));
