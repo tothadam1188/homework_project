@@ -1,6 +1,7 @@
 package hu.unideb.inf.controller;
 
 import hu.unideb.inf.model.GameModel;
+import hu.unideb.inf.model.Move;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -38,11 +39,14 @@ public class GameController {
         background.widthProperty().bind(square.widthProperty());
         background.heightProperty().bind(square.heightProperty());
 
-        square.setOnMouseClicked(e -> {
-            //TODO: logic
-        });
+        square.setOnMouseClicked(e -> handleSquareClick(row, col));
 
         return square;
+    }
+
+    private void handleSquareClick(int row, int col) {
+        gameModel.makeMove(new Move(row, col));
+        updateBoardUI();
     }
 
     private Color getColorForCell(int row, int col) {
@@ -51,5 +55,14 @@ public class GameController {
             case 2 -> Color.RED;
             default -> Color.WHITE;
         };
+    }
+
+    private void updateBoardUI() {
+        for (int row = 0; row < GameModel.boardSize; row++) {
+            for (int col = 0; col < GameModel.boardSize; col++) {
+                Rectangle rect = (Rectangle) squares[row][col].getChildren().getFirst();
+                rect.setFill(getColorForCell(row, col));
+            }
+        }
     }
 }
