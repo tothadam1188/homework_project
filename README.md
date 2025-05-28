@@ -5,14 +5,14 @@ Az egyik játékos célja, hogy a tábla alsó és felső széle között egy fo
 A játékosok felváltva színezhetnek be egy-egy fehér mezőt a saját színükre. Az nyer, aki elsőként összeköti a tábla két szélét a saját színének megfelelő vonallal.
 
 ## An example game
-1. PLAYER_1: 1 1
-1. PLAYER_2: 1 3
-1. PLAYER_1: 3 1
-1. PLAYER_2: 1 5
-1. PLAYER_1: 5 1
-1. PLAYER_2: 1 7
-1. PLAYER_1: 7 1
-1. PLAYER_2: 1 9
-1. PLAYER_1: 9 1
+1. PLAYER_1's move: 1 1
+1. PLAYER_2's move: 3 1
+1. PLAYER_1's move: 1 3
+1. PLAYER_2's move: 5 1
+1. PLAYER_1's move: 1 5
+1. PLAYER_2's move: 7 1
+1. PLAYER_1's move: 1 7
+1. PLAYER_2's move: 9 1
+1. PLAYER_1's move: 1 9
 
-**PLAYER_1 wins**
+**PLAYER_1 won**
