@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 public class GameModel implements State<Move>{
 
-    private Player currentPlayer;
+    private Player player;
     private Status status;
     private static final int boardSize=11;
     private final int[][] board;
@@ -23,7 +23,7 @@ public class GameModel implements State<Move>{
      * an empty game board of size 11x11.
      */
     public GameModel() {
-        this.currentPlayer = Player.PLAYER_1;
+        this.player = Player.PLAYER_1;
         this.status = Status.IN_PROGRESS;
         this.board = new int[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
@@ -36,23 +36,16 @@ public class GameModel implements State<Move>{
                 }
             }
         }
-        Logger.info("GameModel initialized with player={}, status={}", currentPlayer, status);
+        Logger.info("GameModel initialized with player={}, status={}", player, status);
     }
 
     /**
      * Returns the next player to make a move.
-     * @return the {@link Player} who will play after the current player.
+     * @return the {@link Player} who moves next.
      */
     @Override
     public Player getNextPlayer() {
-        if(currentPlayer==Player.PLAYER_1) {
-            Logger.debug("Next player: {}", Player.PLAYER_2);
-            return Player.PLAYER_2;
-        }
-        else {
-            Logger.debug("Next player: {}", Player.PLAYER_1);
-            return Player.PLAYER_1;
-        }
+        return player;
     }
 
     /**
@@ -142,26 +135,18 @@ public class GameModel implements State<Move>{
             Logger.error("Illegal move attempted at row={}, col={}", move.row(), move.col());
             throw new GameModelException("Illegal move at row " + move.row() + ", column " + move.col());
         }
-        if(currentPlayer==Player.PLAYER_1) {
+        if(player==Player.PLAYER_1) {
             Logger.info("PLAYER_1 moved at ({}, {})", move.row(), move.col());
             board[move.col()][move.row()] = 1;
         }
-        if(currentPlayer==Player.PLAYER_2) {
+        if(player==Player.PLAYER_2) {
             Logger.info("PLAYER_2 moved at ({}, {})", move.row(), move.col());
             board[move.col()][move.row()] = 2;
         }
 
-        if(!isGameOver()) {
-            currentPlayer = getNextPlayer();
+        if (!isGameOver()) {
+            player = (player == Player.PLAYER_1) ? Player.PLAYER_2 : Player.PLAYER_1;
         }
-    }
-
-    /**
-     * Returns the current player.
-     * @return the {@link game.State.Player} representing the game's current player.
-     */
-    public Player getCurrentPlayer() {
-        return currentPlayer;
     }
 
     @Override
