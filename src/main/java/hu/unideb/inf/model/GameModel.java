@@ -3,7 +3,7 @@ package hu.unideb.inf.model;
 import game.State;
 import org.tinylog.Logger;
 
-import java.util.Arrays;
+import java.io.IOException;
 
 /**
  * Game logic and state manager for the board game. Handles player turns, move validation, win conditions, and game status.
@@ -15,6 +15,14 @@ public class GameModel implements State<Move>{
     private Status status;
     public static final int boardSize=11;
     private final int[][] board;
+    private String player1Name;
+    private String player2Name;
+    private int rounds=0;
+
+    public void setPlayers(String player1Name, String player2Name) {
+        this.player1Name=player1Name;
+        this.player2Name=player2Name;
+    }
 
     /**
      * Initializes the game model with default settings.
@@ -131,6 +139,7 @@ public class GameModel implements State<Move>{
      */
     public void makeMove(Move move) {
         Logger.debug("Attempting to make move: {}", move);
+        rounds++;
         if (!isLegalMove(move)) {
             Logger.error("Illegal move attempted at row={}, col={}", move.row(), move.col());
             throw new GameModelException("Illegal move at row " + move.row() + ", column " + move.col());
@@ -146,6 +155,14 @@ public class GameModel implements State<Move>{
 
         if (!isGameOver()) {
             player = (player == Player.PLAYER_1) ? Player.PLAYER_2 : Player.PLAYER_1;
+        }
+        else{
+            RoundDataManager roundDataManager = new RoundDataManager();
+            try {
+                roundDataManager.saveRound(new Round(player1Name, player2Name, rounds, this.toString(), status));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
