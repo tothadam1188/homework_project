@@ -11,6 +11,9 @@ import javafx.scene.text.Text;
 
 public class GameController {
     @FXML private Text currentPlayer;
+    private String player1Name;
+    private String player2Name;
+
     @FXML private GridPane board;
 
     private StackPane[][] squares;
@@ -28,6 +31,13 @@ public class GameController {
                 board.add(square, col, row);
             }
         }
+        updateCurrentPlayerText();
+    }
+
+    public void setPlayers(String player1Name, String player2Name) {
+        this.player1Name=player1Name;
+        this.player2Name=player2Name;
+        updateCurrentPlayerText();
     }
 
     private StackPane createSquare(int row, int col) {
@@ -47,6 +57,7 @@ public class GameController {
     private void handleSquareClick(int row, int col) {
         gameModel.makeMove(new Move(row, col));
         updateBoardUI();
+        updateCurrentPlayerText();
     }
 
     private Color getColorForCell(int row, int col) {
@@ -64,5 +75,13 @@ public class GameController {
                 rect.setFill(getColorForCell(row, col));
             }
         }
+    }
+
+    private void updateCurrentPlayerText() {
+        currentPlayer.setText(switch (gameModel.getNextPlayer()) {
+            case PLAYER_1 -> player1Name + "'s turn";
+            case PLAYER_2 -> player2Name + "'s turn";
+            default -> "Unknown player";
+        });
     }
 }
