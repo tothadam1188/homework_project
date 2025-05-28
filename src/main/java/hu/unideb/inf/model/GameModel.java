@@ -91,14 +91,8 @@ public class GameModel implements State<Move>{
                 }
             }
             if (isContinuous) {
-                if(status==Status.PLAYER_1_WINS) {
-                    Logger.info("Game over: DRAW");
-                    status = Status.DRAW;
-                }
-                else {
-                    Logger.info("Game over: PLAYER_2 wins");
-                    status = Status.PLAYER_2_WINS;
-                }
+                status = Status.PLAYER_2_WINS;
+                Logger.info("Game over: PLAYER_2 wins");
                 return true;
             }
         }
@@ -168,6 +162,18 @@ public class GameModel implements State<Move>{
      */
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                sb.append(board[i][j]).append(" ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
 }
