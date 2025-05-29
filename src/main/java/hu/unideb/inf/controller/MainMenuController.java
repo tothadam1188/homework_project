@@ -30,6 +30,9 @@ public class MainMenuController {
 
     private final RoundDataManager roundDataManager = new RoundDataManager();
 
+    /**
+     * Initializes the listeners for updating player statistics.
+     */
     @FXML
     public void initialize() {
         player1Name.textProperty().addListener((obs, oldVal, newVal) -> updatePlayerStats(newVal, player1Stats));
@@ -37,8 +40,8 @@ public class MainMenuController {
     }
 
     /**
-     * Handles the click event on the "Start" button.
-     * @param event the mouse event triggered by clicking the Start button
+     * Handles the click event on the Start button.
+     * @param event the {@code MouseEvent} triggering the start
      * @throws IOException if the FXML file cannot be loaded
      */
     @FXML
@@ -57,10 +60,17 @@ public class MainMenuController {
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
         Logger.debug("Game scene loaded");
     }
 
+    /**
+     * Updates stats display for a given player name.
+     * @param playerName the player's name
+     * @param statsText the {@code Text} UI element to update
+     */
     private void updatePlayerStats(String playerName, Text statsText) {
         if (playerName == null || playerName.isBlank()) {
             statsText.setText("Wins: 0 / Rounds: 0");
