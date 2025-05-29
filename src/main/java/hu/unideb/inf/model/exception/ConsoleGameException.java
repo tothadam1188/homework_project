@@ -1,5 +1,8 @@
 package hu.unideb.inf.model.exception;
 
+/**
+ * Exception thrown to indicate errors related to the console game.
+ */
 public class ConsoleGameException extends RuntimeException {
   /**
    * Constructs a new runtime exception with {@code null} as its

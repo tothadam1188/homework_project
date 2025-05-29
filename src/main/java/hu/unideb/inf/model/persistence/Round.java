@@ -2,6 +2,9 @@ package hu.unideb.inf.model.persistence;
 
 import game.State;
 
+/**
+ * Represents a saved game round including player info, board state, and game status.
+ */
 public class Round {
     private String player1Name;
     private String player2Name;
@@ -12,6 +15,14 @@ public class Round {
     public Round() {
     }
 
+    /**
+     * Creates a new Round with player names, number of rounds, board snapshot, and game status.
+     * @param player1Name the name of Player 1
+     * @param player2Name the name of Player 2
+     * @param rounds the number of rounds it took for the game to end
+     * @param board the string representation of the board when the game ended
+     * @param status the status of the game when the game ended
+     */
     public Round(String player1Name, String player2Name, int rounds, String board, State.Status status) {
         this.player1Name = player1Name;
         this.player2Name = player2Name;

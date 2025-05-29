@@ -59,7 +59,7 @@ public class RoundDataManager {
 
     /**
      * Loads all saved rounds from the JSON file.
-     * @return a list of rounds; returns an empty list if file doesn't exist or is unreadable
+     * @return a list of rounds, returns an empty list if file doesn't exist or is unreadable
      */
     public List<Round> loadRounds(){
         try (FileReader reader=new FileReader(FILENAME)){
@@ -77,7 +77,7 @@ public class RoundDataManager {
     /**
      * Loads all saved rounds from the JSON file.
      * @param filename name of file from which data is loaded
-     * @return a list of rounds; returns an empty list if file doesn't exist or is unreadable
+     * @return a list of rounds, returns an empty list if file doesn't exist or is unreadable
      */
     public List<Round> loadRounds(String filename){
         try (FileReader reader=new FileReader(filename)){

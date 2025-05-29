@@ -39,13 +39,8 @@ public class MainMenuController {
         player2Name.textProperty().addListener((obs, oldVal, newVal) -> updatePlayerStats(newVal, player2Stats));
     }
 
-    /**
-     * Handles the click event on the Start button.
-     * @param event the {@code MouseEvent} triggering the start
-     * @throws IOException if the FXML file cannot be loaded
-     */
     @FXML
-    void onStartClick(MouseEvent event) throws IOException {
+    private void onStartClick(MouseEvent event) throws IOException {
         Logger.debug("Start button clicked");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/game_view.fxml"));
@@ -66,11 +61,6 @@ public class MainMenuController {
         Logger.debug("Game scene loaded");
     }
 
-    /**
-     * Updates stats display for a given player name.
-     * @param playerName the player's name
-     * @param statsText the {@code Text} UI element to update
-     */
     private void updatePlayerStats(String playerName, Text statsText) {
         if (playerName == null || playerName.isBlank()) {
             statsText.setText("Wins: 0 / Rounds: 0");

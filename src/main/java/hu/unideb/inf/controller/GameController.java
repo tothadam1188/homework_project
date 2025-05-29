@@ -34,9 +34,6 @@ public class GameController {
     private StackPane[][] boardCells;
     private final GameModel gameModel = new GameModel();
 
-    /**
-     * Initializes the game board UI and sets up event listeners.
-     */
     @FXML
     private void initialize() {
         Logger.debug("Initializing game board");
@@ -67,12 +64,6 @@ public class GameController {
         updateCurrentPlayerDisplay();
     }
 
-    /**
-     * Creates a cell on the board with click handling.
-     * @param row row of cell on board
-     * @param col column of cell on board
-     * @return a square of the StackPane class
-     */
     private StackPane createCell(int row, int col) {
         Rectangle background = new Rectangle(CELL_SIZE, CELL_SIZE);
         background.setStroke(Color.BLACK);
@@ -88,11 +79,6 @@ public class GameController {
         return cell;
     }
 
-    /**
-     * Handles user clicking a cell to make a move.
-     * @param row row of user click on board
-     * @param col column of user click on board
-     */
     private void handleCellClick(int row, int col) {
         if (gameModel.isGameOver()) {
             Logger.debug("Click ignored, game is already over.");
@@ -110,9 +96,6 @@ public class GameController {
         }
     }
 
-    /**
-     * Handles game-over UI logic.
-     */
     private void handleGameOver() {
         String winner = switch (gameModel.getStatus()) {
             case PLAYER_1_WINS -> player1Name;
@@ -125,12 +108,6 @@ public class GameController {
         restartButton.setVisible(true);
     }
 
-    /**
-     * Determines the color of a cell based cell value.
-     * @param row row of cell on board
-     * @param col column of cell on board
-     * @return a {@link Color} representing the player or empty cell
-     */
     private Color determineCellColor(int row, int col) {
         return switch (gameModel.getBoardCell(row, col)) {
             case 1 -> Color.BLUE;

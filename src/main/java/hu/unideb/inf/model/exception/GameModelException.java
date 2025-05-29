@@ -1,5 +1,8 @@
 package hu.unideb.inf.model.exception;
 
+/**
+ * Exception thrown to indicate errors related to the game model.
+ */
 public class GameModelException extends RuntimeException {
     /**
      * Constructs a new runtime exception with the specified detail message.
