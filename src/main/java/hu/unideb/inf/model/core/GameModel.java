@@ -14,18 +14,18 @@ import java.io.IOException;
  */
 public class GameModel implements State<Move>{
 
-    private Player player;
-    private Status status;
-    public static final int BOARD_SIZE =11;
-    private final int[][] board;
+    public static final int BOARD_SIZE = 11;
+    private static final int PLAYER_1_MARKER = 1;
+    private static final int PLAYER_2_MARKER = 2;
+
+    private final int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
+    private final RoundDataManager roundDataManager = new RoundDataManager();
+
+    private Player currentPlayer = Player.PLAYER_1;
+    private Status status = Status.IN_PROGRESS;
     private String player1Name;
     private String player2Name;
-    private int rounds=0;
-
-    public void setPlayers(String player1Name, String player2Name) {
-        this.player1Name=player1Name;
-        this.player2Name=player2Name;
-    }
+    private int rounds = 0;
 
     /**
      * Initializes the game model with default settings.
@@ -34,20 +34,26 @@ public class GameModel implements State<Move>{
      * an empty game board of size 11x11.
      */
     public GameModel() {
-        this.player = Player.PLAYER_1;
-        this.status = Status.IN_PROGRESS;
-        this.board = new int[BOARD_SIZE][BOARD_SIZE];
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                if (i%2==0 && j%2==1){
-                    board[i][j]=1;
-                }
-                if(i%2==1 && j%2==0){
-                    board[i][j]=2;
+        for (int row = 0; row < BOARD_SIZE; row++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
+                if (row % 2 == 0 && col % 2 == 1) {
+                    board[row][col] = PLAYER_1_MARKER;
+                } else if (row % 2 == 1 && col % 2 == 0) {
+                    board[row][col] = PLAYER_2_MARKER;
                 }
             }
         }
-        Logger.info("GameModel initialized with player={}, status={}", player, status);
+        Logger.info("GameModel initialized with player={}, status={}", currentPlayer, status);
+    }
+
+    /**
+     * Sets the name of the two players.
+     * @param player1Name the name of Player 1
+     * @param player2Name the name of Player 2
+     */
+    public void setPlayers(String player1Name, String player2Name) {
+        this.player1Name=player1Name;
+        this.player2Name=player2Name;
     }
 
     /**
@@ -56,7 +62,7 @@ public class GameModel implements State<Move>{
      */
     @Override
     public Player getNextPlayer() {
-        return player;
+        return currentPlayer;
     }
 
     /**
@@ -73,28 +79,28 @@ public class GameModel implements State<Move>{
     public boolean isGameOver() {
         Logger.debug("Checking if the game is over.");
         for (int col = 0; col < BOARD_SIZE; col++) {
-            boolean isContinuous = true;
+            boolean fullColumn = true;
             for (int row = 0; row < BOARD_SIZE; row++) {
-                if (board[row][col] != 1) {
-                    isContinuous = false;
+                if (board[row][col] != PLAYER_1_MARKER) {
+                    fullColumn = false;
                     break;
                 }
             }
-            if (isContinuous) {
+            if (fullColumn) {
                 status = Status.PLAYER_1_WINS;
                 Logger.info("Game over: PLAYER_1 wins");
                 return true;
             }
         }
         for (int row = 0; row < BOARD_SIZE; row++) {
-            boolean isContinuous = true;
+            boolean fullRow = true;
             for (int col = 0; col < BOARD_SIZE; col++) {
-                if (board[row][col] != 2) {
-                    isContinuous = false;
+                if (board[row][col] != PLAYER_2_MARKER) {
+                    fullRow = false;
                     break;
                 }
             }
-            if (isContinuous) {
+            if (fullRow) {
                 status = Status.PLAYER_2_WINS;
                 Logger.info("Game over: PLAYER_2 wins");
                 return true;
@@ -144,29 +150,35 @@ public class GameModel implements State<Move>{
     public void makeMove(Move move) {
         Logger.debug("Attempting to make move: {}", move);
         rounds++;
+
         if (!isLegalMove(move)) {
             Logger.error("Illegal move attempted at row={}, col={}", move.row(), move.col());
             throw new GameModelException("Illegal move at row " + move.row() + ", column " + move.col());
         }
-        if(player==Player.PLAYER_1) {
-            Logger.info("PLAYER_1 moved at ({}, {})", move.row(), move.col());
-            board[move.row()][move.col()] = 1;
+        if(currentPlayer==Player.PLAYER_1) {
+            board[move.row()][move.col()] = PLAYER_1_MARKER;
         }
-        if(player==Player.PLAYER_2) {
-            Logger.info("PLAYER_2 moved at ({}, {})", move.row(), move.col());
-            board[move.row()][move.col()] = 2;
+        if(currentPlayer==Player.PLAYER_2) {
+            board[move.row()][move.col()] = PLAYER_2_MARKER;
         }
 
-        if (!isGameOver()) {
-            player = (player == Player.PLAYER_1) ? Player.PLAYER_2 : Player.PLAYER_1;
+        Logger.info("{} moved at ({}, {})", currentPlayer, move.row(), move.col());
+
+        if (isGameOver()) {
+            this.saveRound();
         }
         else{
-            RoundDataManager roundDataManager = new RoundDataManager();
-            try {
-                roundDataManager.saveRound(new Round(player1Name, player2Name, rounds, this.toString(), status));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            if(currentPlayer==Player.PLAYER_1) currentPlayer=Player.PLAYER_2;
+            else if(currentPlayer==Player.PLAYER_2) currentPlayer=Player.PLAYER_1;
+        }
+    }
+
+    private void saveRound() {
+        try {
+            roundDataManager.saveRound(new Round(player1Name, player2Name, rounds, this.toString(), status));
+        } catch (IOException e) {
+            Logger.error("Failed to save round data", e);
+            throw new RuntimeException("Error saving round", e);
         }
     }
 

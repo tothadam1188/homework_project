@@ -12,10 +12,11 @@ public class GameApplication extends Application{
 
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/main_menu.fxml"));
-        stage.setTitle("JavaFX Board Game Example");
+        stage.setTitle("JavaFX Two-player Game");
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.centerOnScreen();
         stage.show();
     }
 }
