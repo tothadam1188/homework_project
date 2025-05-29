@@ -3,6 +3,7 @@ package hu.unideb.inf.controller;
 import hu.unideb.inf.model.core.GameModel;
 import hu.unideb.inf.model.core.Move;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -20,6 +21,7 @@ public class GameController {
     private String player2Name;
 
     @FXML private GridPane board;
+    @FXML private Button restartButton;
 
     private StackPane[][] squares;
 
@@ -67,6 +69,10 @@ public class GameController {
         background.setFill(getColorForCell(row, col));
 
         StackPane square = new StackPane(background);
+        square.setPrefSize(70, 70);
+        square.setMinSize(70, 70);
+        square.setMaxSize(70, 70);
+
         background.widthProperty().bind(square.widthProperty());
         background.heightProperty().bind(square.heightProperty());
 
@@ -97,6 +103,7 @@ public class GameController {
             };
             Logger.info("Game over. Winner: {}", winner);
             currentPlayer.setText("Game Over! " + winner + " wins!");
+            restartButton.setVisible(true);
         } else {
             updateCurrentPlayerText();
         }
@@ -137,5 +144,25 @@ public class GameController {
             case PLAYER_1 -> player1Name + "'s turn";
             case PLAYER_2 -> player2Name + "'s turn";
         });
+    }
+
+    /**
+     * Handles user clicking on the Restart button.
+     * Loads the Main Screen.
+     */
+    @FXML
+    private void onRestartClick() {
+        try {
+            Logger.debug("Restart button clicked - returning to main menu");
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/main_menu.fxml"));
+            javafx.scene.Parent root = loader.load();
+
+            javafx.stage.Stage stage = (javafx.stage.Stage) board.getScene().getWindow();
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (java.io.IOException e) {
+            Logger.error("Failed to load main menu on restart", e);
+        }
     }
 }
